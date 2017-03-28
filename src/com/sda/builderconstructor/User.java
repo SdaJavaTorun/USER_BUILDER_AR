@@ -8,12 +8,12 @@ public class User {
     private String address;  // opt
     private int age;  // opt
 
-    public User(UserBuilder userBuilder) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.telephone = telephone;
-        this.address = address;
-        this.age = age;
+    private User(Builder builder) {
+        setFirstName(builder.firstName);
+        setLastName(builder.lastName);
+        setTelephone(builder.telephone);
+        setAddress(builder.address);
+        setAge(builder.age);
     }
 
     @Override
@@ -27,74 +27,69 @@ public class User {
                 '}';
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public String getTelephone() {
-        return telephone;
-    }
-
     public void setTelephone(String telephone) {
         this.telephone = telephone;
-    }
-
-    public String getAddress() {
-        return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
     }
 
-    public int getAge() {
-        return age;
-    }
-
     public void setAge(int age) {
         this.age = age;
     }
 
-    public static class UserBuilder {
-        private String firstName;  // req
-        private String lastName;  // req
-        private String telephone;  // opt
-        private String address;  // opt
-        private int age;  // opt
+    public static final class Builder {
+        private String firstName;
+        private String lastName;
+        private String telephone;
+        private String address;
+        private int age;
 
-        public UserBuilder(String firstName, String lastName) {
+        // jesli wszystkie pola klasy bazowej sa opcjonalne stosujemy taki konstruktor
+        public Builder() {
+        }
+
+        // w taki konstruktor wstawiamy pola, które maja być wymagane
+        public Builder(String firstName, String lastName) {
             this.firstName = firstName;
             this.lastName = lastName;
         }
 
-        public UserBuilder age (int age) {
-            this.age = age;
+        public Builder firstName(String val) {
+            firstName = val;
             return this;
         }
 
-        public UserBuilder telephone (String telephone) {
-            this.telephone = telephone;
+        public Builder lastName(String val) {
+            lastName = val;
             return this;
         }
 
-        public UserBuilder address (String address) {
-            this.address = address;
+        public Builder telephone(String val) {
+            telephone = val;
             return this;
         }
 
-        public User build () {
+        public Builder address(String val) {
+            address = val;
+            return this;
+        }
+
+        public Builder age(int val) {
+            age = val;
+            return this;
+        }
+
+        public User build() {
             return new User(this);
         }
     }
